@@ -50,7 +50,8 @@ class EditProfile extends StatelessWidget {
                     SocialCubit.get(context).updateUser(
                         name: nameController.text,
                         phone: phoneController.text,
-                        bio: bioController.text);
+                        bio: bioController.text
+                    );
                   },
                   text: 'Update'),
                SizedBox(

@@ -31,10 +31,22 @@ class SocialUploadProfileImageError extends SocialStates{}
 
 class SocialUploadCoverImageSuccess extends SocialStates{}
 
-class SocialUploadCoverImageError extends SocialStates{
-}
+class SocialUploadCoverImageError extends SocialStates{}
 
 class SocialUserUpdateLoadingState extends SocialStates{}
 
 class SocialUserUpdateError extends SocialStates{}
+
+//create posts
+class SocialCreateLoadingPost extends SocialStates{}
+
+class SocialCreatePostSuccess extends SocialStates{}
+
+class SocialCreatePostError extends SocialStates{}
+
+class SocialPostImageSuccess extends SocialStates{}
+
+class SocialPostImageError extends SocialStates{}
+
+class SocialRemovePostImage extends SocialStates{}
 
