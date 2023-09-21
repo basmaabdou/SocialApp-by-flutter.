@@ -273,4 +273,17 @@ class SocialCubit extends Cubit<SocialStates>{
     emit(SocialRemovePostImage());
   }
 
+  //get posts
+  List<postModel> posts=[];
+void getPosts(){
+    FirebaseFirestore.instance.collection('posts').get().then((value) {
+      value.docs.forEach((element) {
+        posts.add(postModel.fromJson(element.data()));
+      });
+      emit(SocialGetPostsSuccess());
+    }).catchError((error){
+      emit(SocialGetPostsError(error.toString()));
+    });
+}
+
 }

@@ -50,3 +50,12 @@ class SocialPostImageError extends SocialStates{}
 
 class SocialRemovePostImage extends SocialStates{}
 
+//get posts
+class SocialGetPostsSuccess extends SocialStates{}
+
+class SocialGetPostsError extends SocialStates{
+  final String error;
+
+  SocialGetPostsError(this.error);
+
+}

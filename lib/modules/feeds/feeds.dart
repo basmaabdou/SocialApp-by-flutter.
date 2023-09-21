@@ -1,4 +1,9 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/models/post_model.dart';
+import 'package:social_app/modules/cubit/cubit.dart';
+import 'package:social_app/modules/cubit/states.dart';
 import 'package:social_app/shared/styles/color.dart';
 import 'package:social_app/shared/styles/icon_broken.dart';
 
@@ -6,63 +11,73 @@ class SocialFeeds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 5,
-            margin: EdgeInsets.all(10.0),
-            child: Stack(
-              alignment: AlignmentDirectional.bottomStart,
-              children:[
-                Image(
-                image: NetworkImage('https://img.freepik.com/free-photo/close-up-male-hands-using-tablet-with-blank-screen_155003-37639.jpg?w=1060&t=st=1693757666~exp=1693758266~hmac=706c68af619bb1a073dc60a1410727fd342493dbf4205c593ad9f53285c4175f'),
-                height: 180,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-                Padding(
-                  padding:  EdgeInsets.all(8.0),
-                  child: Text(
-                    'communicate with your friends',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      color: Colors.white
-                    ),
+    return BlocConsumer<SocialCubit,SocialStates>(
+      listener: (BuildContext context, SocialStates state) {  },
+      builder: (BuildContext context, SocialStates state) {
+        return ConditionalBuilder(
+          condition: SocialCubit.get(context).posts.length >0,
+          builder: (BuildContext context) =>SingleChildScrollView(
+            child: Column(
+              children: [
+                Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  elevation: 5,
+                  margin: EdgeInsets.all(10.0),
+                  child: Stack(
+                      alignment: AlignmentDirectional.bottomStart,
+                      children:[
+                        Image(
+                          image: NetworkImage('https://img.freepik.com/free-photo/close-up-male-hands-using-tablet-with-blank-screen_155003-37639.jpg?w=1060&t=st=1693757666~exp=1693758266~hmac=706c68af619bb1a073dc60a1410727fd342493dbf4205c593ad9f53285c4175f'),
+                          height: 180,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                        Padding(
+                          padding:  EdgeInsets.all(8.0),
+                          child: Text(
+                            'communicate with your friends',
+                            style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                                color: Colors.white
+                            ),
+                          ),
+                        ),
+                      ]
                   ),
                 ),
-              ]
+                ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context,index)=>buildPostItem(SocialCubit.get(context).posts[index],context),
+                    separatorBuilder: (context,index)=> SizedBox(
+                      height: 8,
+                    ),
+                    itemCount: SocialCubit.get(context).posts.length
+                )
+              ],
             ),
           ),
-          ListView.separated(
-            shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context,index)=>buildPostItem(context),
-              separatorBuilder: (context,index)=> SizedBox(
-                height: 8,
-              ),
-              itemCount: 10
-          )
-        ],
-      ),
+          fallback: (BuildContext context)  =>Center(child: CircularProgressIndicator()),
+        );
+      },
     );
   }
 
-  Widget buildPostItem(context)=> Card(
+  Widget buildPostItem(postModel model,context)=> Card(
     clipBehavior: Clip.antiAliasWithSaveLayer,
     elevation: 5,
     margin: EdgeInsets.symmetric(
         horizontal: 10
     ),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             CircleAvatar(
               radius: 15,
               backgroundImage: NetworkImage(
-                  'https://img.freepik.com/free-photo/order-registration_1098-16196.jpg?w=1060&t=st=1693758325~exp=1693758925~hmac=1bc95e0e63edee075305cf5f5f204b471af6dad235cca142a7c82583f6cbcd1b'
-              ),
+                '${model.image}'
+                  ),
 
             ),
             SizedBox(
@@ -73,7 +88,7 @@ class SocialFeeds extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Basma Mohamed',
+                      '${model.name}',
                       style: TextStyle(
                           height: 1.4
                       ),
@@ -89,7 +104,7 @@ class SocialFeeds extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  'january 10/2022',
+                  '${model.dateTime}',
                   style: Theme.of(context).textTheme.caption!.copyWith(
                       height: 1.4
                   ),
@@ -113,115 +128,130 @@ class SocialFeeds extends StatelessWidget {
           ),
         ),
         Text(
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries',
+          '${model.text}',
           style: Theme.of(context).textTheme.subtitle1,
         ),
-        Container(
-          width: double.infinity,
-          child: Wrap(
-            children: [
-              Padding(
-                padding:  EdgeInsetsDirectional.only(end: 5),
-                child: Container(
-                    height: 25,
-                    child: MaterialButton(
-                      onPressed: (){},
-                      child: Text(
-                          '#software',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: Colors.blue,
-                          )
-                      ),
-                      minWidth: 1,
-                      padding: EdgeInsets.zero,
-                    )
-                ),
-              ),
-              Padding(
-                padding:  EdgeInsetsDirectional.only(end: 5),
-                child: Container(
-                    height: 25,
-                    child: MaterialButton(
-                      onPressed: (){},
-                      child: Text(
-                          '#software',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: Colors.blue,
-                          )
-                      ),
-                      minWidth: 1,
-                      padding: EdgeInsets.zero,
-                    )
-                ),
-              ),
+        // Container(
+        //   width: double.infinity,
+        //   child: Wrap(
+        //     children: [
+        //       Padding(
+        //         padding:  EdgeInsetsDirectional.only(end: 5),
+        //         child: Container(
+        //             height: 25,
+        //             child: MaterialButton(
+        //               onPressed: (){},
+        //               child: Text(
+        //                   '#software',
+        //                   style: Theme.of(context).textTheme.caption!.copyWith(
+        //                     color: Colors.blue,
+        //                   )
+        //               ),
+        //               minWidth: 1,
+        //               padding: EdgeInsets.zero,
+        //             )
+        //         ),
+        //       ),
+        //       Padding(
+        //         padding:  EdgeInsetsDirectional.only(end: 5),
+        //         child: Container(
+        //             height: 25,
+        //             child: MaterialButton(
+        //               onPressed: (){},
+        //               child: Text(
+        //                   '#software',
+        //                   style: Theme.of(context).textTheme.caption!.copyWith(
+        //                     color: Colors.blue,
+        //                   )
+        //               ),
+        //               minWidth: 1,
+        //               padding: EdgeInsets.zero,
+        //             )
+        //         ),
+        //       ),
 
-            ],
-          ),
-        ),
-        Container(
-          height: 140,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              image: DecorationImage(
-                image: NetworkImage('https://img.freepik.com/free-photo/close-up-male-hands-using-tablet-with-blank-screen_155003-37639.jpg?w=1060&t=st=1693757666~exp=1693758266~hmac=706c68af619bb1a073dc60a1410727fd342493dbf4205c593ad9f53285c4175f'),
-                fit: BoxFit.cover,
+        //     ],
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 10,
+        // ),
 
-              )
-          ),
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: InkWell(
-                child: Row(
-                  children: [
-                    Icon(
-                      IconBroken.Heart,
-                      color: Colors.red[300],
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '120',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: Colors.grey[500]
-                      ),
-                    ),
+        if(model.postImage != null)
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+                top: 15
+            ),
+            child: Container(
+              height: 140,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  image: DecorationImage(
+                    image: NetworkImage('${model.postImage}'),
+                    fit: BoxFit.cover,
 
-                  ],
-                ),
-                onTap: (){},
+                  )
               ),
             ),
-            Expanded(
-              child: InkWell(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      IconBroken.Chat,
-                      color: Colors.amber,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '80 comment',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: Colors.grey[500]
-                      ),
-                    ),
+          ),
+        Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: 5
+          ),
+          child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    child: Row(
+                      children: [
+                        Icon(
+                          IconBroken.Heart,
+                          color: Colors.red[300],
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '0',
+                          style: Theme.of(context).textTheme.caption!.copyWith(
+                              color: Colors.grey[500]
+                          ),
+                        ),
 
-                  ],
+                      ],
+                    ),
+                    onTap: (){},
+                  ),
                 ),
-                onTap: (){},
-              ),
+                Expanded(
+                  child: InkWell(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          IconBroken.Chat,
+                          color: Colors.amber,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '0 comment',
+                          style: Theme.of(context).textTheme.caption!.copyWith(
+                              color: Colors.grey[500]
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    onTap: (){},
+                  ),
+                ),
+              ],
             ),
-          ],
         ),
         Padding(
           padding:  EdgeInsets.symmetric(vertical: 5),
@@ -240,7 +270,7 @@ class SocialFeeds extends StatelessWidget {
                     CircleAvatar(
                       radius: 18,
                       backgroundImage: NetworkImage(
-                          'https://img.freepik.com/free-photo/order-registration_1098-16196.jpg?w=1060&t=st=1693758325~exp=1693758925~hmac=1bc95e0e63edee075305cf5f5f204b471af6dad235cca142a7c82583f6cbcd1b'
+                            '${SocialCubit.get(context).userModel!.image}'
                       ),
 
                     ),
