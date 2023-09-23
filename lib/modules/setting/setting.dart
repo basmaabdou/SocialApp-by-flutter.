@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/modules/cubit/cubit.dart';
 import 'package:social_app/modules/cubit/states.dart';
+import 'package:social_app/modules/login/login_screen.dart';
 import 'package:social_app/shared/componant/componant.dart';
 import 'package:social_app/shared/styles/icon_broken.dart';
 
@@ -162,6 +163,12 @@ class SocialSetting extends StatelessWidget {
                       },
                       child:  Icon(IconBroken.Edit,size: 17,)
                   ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  OutlinedButton(onPressed: (){
+                    navigateFinish(context, LoginScreen());
+                  }, child: Text('LogOut'))
                 ],
               )
             ],

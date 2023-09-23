@@ -4,12 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/models/post_model.dart';
 import 'package:social_app/modules/cubit/cubit.dart';
 import 'package:social_app/modules/cubit/states.dart';
+import 'package:social_app/shared/componant/componant.dart';
 import 'package:social_app/shared/styles/color.dart';
 import 'package:social_app/shared/styles/icon_broken.dart';
 
 class SocialFeeds extends StatelessWidget {
-
-  @override
+var commentController=TextEditingController();
+   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SocialCubit,SocialStates>(
       listener: (BuildContext context, SocialStates state) {  },
@@ -27,13 +28,13 @@ class SocialFeeds extends StatelessWidget {
                       alignment: AlignmentDirectional.bottomStart,
                       children:[
                         Image(
-                          image: NetworkImage('https://img.freepik.com/free-photo/close-up-male-hands-using-tablet-with-blank-screen_155003-37639.jpg?w=1060&t=st=1693757666~exp=1693758266~hmac=706c68af619bb1a073dc60a1410727fd342493dbf4205c593ad9f53285c4175f'),
+                          image: NetworkImage('https://img.freepik.com/free-photo/portrait-young-people-with-thought-bubble_23-2149184866.jpg?w=1060&t=st=1695413974~exp=1695414574~hmac=27e2c63256ebf3afbff2343911b1682c859dc6e67dc70623a7f75bbfd50e492c'),
                           height: 180,
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
                         Padding(
-                          padding:  EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             'communicate with your friends',
                             style: Theme.of(context).textTheme.subtitle1!.copyWith(
@@ -239,7 +240,7 @@ class SocialFeeds extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          '0 comment',
+                          '${SocialCubit.get(context).comment[index]}',
                           style: Theme.of(context).textTheme.caption!.copyWith(
                               color: Colors.grey[500]
                           ),
@@ -275,15 +276,23 @@ class SocialFeeds extends StatelessWidget {
 
                     ),
                     SizedBox(
-                      width: 5,
+                      width: 30,
                     ),
+                    // Expanded(
+                    //   child: TextFormField(
+                    //     decoration: InputDecoration(
+                    //         hintText: 'write your mind ...'
+                    //     ),),
+                    // ),
                     Text(
                       'write a comment ......',
                       style: Theme.of(context).textTheme.caption,
                     ),
                   ],
                 ),
-                onTap: (){},
+                onTap: (){
+                  SocialCubit.get(context).commentPost(SocialCubit.get(context).postId[index]);
+                },
               ),
             ),
             InkWell(
@@ -311,7 +320,8 @@ class SocialFeeds extends StatelessWidget {
               },
             ),
           ],
-        )
+        ),
+
       ],
     ),
   );

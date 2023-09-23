@@ -69,3 +69,43 @@ class SocialLikePostsError extends SocialStates{
   SocialLikePostsError(this.error);
 
 }
+
+//comment posts
+class SocialCommentPostsSuccess extends SocialStates{}
+
+class SocialCommentPostsError extends SocialStates{
+  final String error;
+
+  SocialCommentPostsError(this.error);
+
+}
+
+//get all users for chat
+class SocialGetAllUserSuccess extends SocialStates{}
+
+class SocialGetAllUserError extends SocialStates{
+  final String error;
+
+  SocialGetAllUserError(this.error);
+}
+
+//chat
+class SocialSendMessageSuccess extends SocialStates{}
+
+class SocialSendMessageError extends SocialStates{
+  final String error;
+
+  SocialSendMessageError(this.error);
+}
+
+class SocialGetMessageSuccess extends SocialStates{}
+
+class SocialGetMessageError extends SocialStates{
+  final String error;
+
+  SocialGetMessageError(this.error);
+}
+
+class SocialChatImageSuccess extends SocialStates{}
+
+class SocialChatImageError extends SocialStates{}
