@@ -38,12 +38,12 @@ class NewPosts extends StatelessWidget {
                     var now= DateTime.now();
                     if(SocialCubit.get(context).postImage ==null){
                       SocialCubit.get(context).createPost(
-                          dataTime: now.toString(),
+                          dateTime: now.toString(),
                           text: textController.text
                       );
                     }else{
                       SocialCubit.get(context).uploadPostImage(
-                          dataTime: now.toString(),
+                          dateTime: now.toString(),
                           text: textController.text
                       );
                     }

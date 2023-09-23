@@ -1,4 +1,4 @@
-class postModel {
+class PostModel {
   String? name;
   String? uId;
   String? image;
@@ -6,7 +6,7 @@ class postModel {
   String? text;
   String? postImage;
 
-  postModel({
+  PostModel({
     this.name,
     this.uId,
     this.image,
@@ -15,7 +15,7 @@ class postModel {
     this.postImage,
   });
 
-  postModel.fromJson(Map<String, dynamic> json)
+  PostModel.fromJson(Map<String, dynamic> json)
   {
     name = json['name'];
     uId = json['uId'];

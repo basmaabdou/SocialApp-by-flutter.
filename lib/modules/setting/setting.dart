@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/modules/cubit/cubit.dart';
@@ -169,6 +170,31 @@ class SocialSetting extends StatelessWidget {
                   OutlinedButton(onPressed: (){
                     navigateFinish(context, LoginScreen());
                   }, child: Text('LogOut'))
+                ],
+              ),
+              Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: ()
+                    {
+                      FirebaseMessaging.instance.subscribeToTopic('announcements');
+                    },
+                    child: Text(
+                      'subscribe',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  OutlinedButton(
+                    onPressed: ()
+                    {
+                      FirebaseMessaging.instance.unsubscribeFromTopic('announcements');
+                    },
+                    child: Text(
+                      'unsubscribe',
+                    ),
+                  ),
                 ],
               )
             ],

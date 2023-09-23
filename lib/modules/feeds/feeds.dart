@@ -63,7 +63,7 @@ var commentController=TextEditingController();
     );
   }
 
-  Widget buildPostItem(postModel model,context, index)=> Card(
+  Widget buildPostItem(PostModel model,context, index)=> Card(
     clipBehavior: Clip.antiAliasWithSaveLayer,
     elevation: 5,
     margin: EdgeInsets.symmetric(
