@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/modules/cubit/cubit.dart';
 import 'package:social_app/modules/cubit/states.dart';
 import 'package:social_app/modules/login/login_screen.dart';
+import 'package:social_app/modules/native_code/native_code_screen.dart';
 import 'package:social_app/shared/componant/componant.dart';
 import 'package:social_app/shared/styles/icon_broken.dart';
 
@@ -184,7 +185,7 @@ class SocialSetting extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 20.0,
+                    width: 10,
                   ),
                   OutlinedButton(
                     onPressed: ()
@@ -195,8 +196,19 @@ class SocialSetting extends StatelessWidget {
                       'unsubscribe',
                     ),
                   ),
+                  SizedBox(
+                    width: 9,
+                  ),
+                  OutlinedButton(onPressed: (){navigateTo(context, NativeCodeScreen());}, child: Text('Show battery'))
+                  // TextButton(
+                  //     onPressed: (){
+                  //       navigateTo(context, NativeCodeScreen());
+                  //       },
+                  //     child: Text('Show battery')
+                  // ),
                 ],
-              )
+              ),
+
             ],
           ),
         );
